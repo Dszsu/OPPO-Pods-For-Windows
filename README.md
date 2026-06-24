@@ -2,6 +2,8 @@
 
 Windows 桌面端 OPPO 耳机蓝牙控制器，支持 Enco Free4 / X3 / Air5 / Air2 Pro 系列。
 
+> **当前仅完整测试过 OPPO Enco Free4，功能均正常。** 其他机型适配逻辑移植自开源参考项目，未做真机验证，不保证全部功能可用。
+
 基于 [Leaf-lsgtky/OppoPods](https://github.com/Leaf-lsgtky/OppoPods) 逆向的 OPPO 私有 RFCOMM 协议，参考 [1812z/OppoPods](https://github.com/1812z/OppoPods) 的功能矩阵实现。
 
 ## 功能
