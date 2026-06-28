@@ -419,20 +419,26 @@ public partial class MainWindow : Wpf.Ui.Controls.FluentWindow
     }
 
     private bool _filtering;  // 防止搜索过滤时触发 CbModel_Changed
+    private bool _inTextChanged;  // 防止 TextChanged 递归
 
-    private void CbModel_GotFocus(object s, RoutedEventArgs e)
+    private void CbModel_PreviewMouseDown(object s, MouseButtonEventArgs e)
     {
+        if (CbModel.IsDropDownOpen) return;
+        // 强制布局完成后再打开下拉（首次进入设置页时控件可能尚未完成布局）
+        CbModel.UpdateLayout();
         CbModel.IsDropDownOpen = true;
     }
 
     private void CbModel_DropDownOpened(object s, EventArgs e)
     {
-        // 每次打开下拉时重置为完整列表
+        // 保存当前选中值，清空后重建列表再恢复选中
+        var prev = _modelOverride ?? "自动检测";
         _filtering = true;
         CbModel.Items.Clear();
         CbModel.Items.Add("自动检测");
         foreach (var name in _allModelNames) CbModel.Items.Add(name);
-        CbModel.Text = _modelOverride ?? "";
+        CbModel.SelectedItem = prev;
+        CbModel.Text = prev;
         _filtering = false;
 
         // 监听输入实现实时模糊搜索（只绑定一次）
@@ -441,6 +447,8 @@ public partial class MainWindow : Wpf.Ui.Controls.FluentWindow
             tb.Tag = "hooked";
             tb.TextChanged += (_, _) =>
             {
+                if (_inTextChanged) return;
+                _inTextChanged = true;
                 var filter = tb.Text;
                 if (string.IsNullOrEmpty(filter))
                 {
@@ -450,6 +458,7 @@ public partial class MainWindow : Wpf.Ui.Controls.FluentWindow
                     CbModel.Items.Add("自动检测");
                     foreach (var name in _allModelNames) CbModel.Items.Add(name);
                     _filtering = false;
+                    _inTextChanged = false;
                     return;
                 }
                 _filtering = true;
@@ -462,7 +471,20 @@ public partial class MainWindow : Wpf.Ui.Controls.FluentWindow
                 CbModel.Text = filter;
                 _filtering = false;
                 tb.CaretIndex = filter.Length;
+                _inTextChanged = false;
             };
+        }
+    }
+
+    private void CbModel_DropDownClosed(object s, EventArgs e)
+    {
+        // 关闭下拉时恢复正确显示文本，防止搜索后未选择导致显示为空
+        var display = _modelOverride ?? "自动检测";
+        if (CbModel.Text != display)
+        {
+            _inTextChanged = true;
+            CbModel.Text = display;
+            _inTextChanged = false;
         }
     }
 

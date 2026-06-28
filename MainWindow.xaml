@@ -244,7 +244,8 @@
 
                     <TextBlock Text="设备型号" FontSize="12" Margin="0,0,0,2" HorizontalAlignment="Center"/>
                     <ComboBox x:Name="CbModel" SelectionChanged="CbModel_Changed" Height="30" Padding="8,0" Margin="0,0,0,12"
-                              IsEditable="True" GotFocus="CbModel_GotFocus" DropDownOpened="CbModel_DropDownOpened"/>
+                              IsEditable="True" PreviewMouseLeftButtonDown="CbModel_PreviewMouseDown"
+                              DropDownOpened="CbModel_DropDownOpened" DropDownClosed="CbModel_DropDownClosed"/>
                     <TextBlock x:Name="ModelNote" Text="" FontSize="10" HorizontalAlignment="Center" Opacity="0.5" Margin="0,-8,0,8"/>
 
                     <TextBlock Text="自定义设备名称" FontSize="12" Margin="0,0,0,2" HorizontalAlignment="Center"/>
