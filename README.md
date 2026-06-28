@@ -189,16 +189,25 @@ dotnet publish -c Release -r win-x64 --self-contained false -o publish
 
 ### 设备支持
 
+完整设备白名单（137 款）位于 `DeviceModels.json`，数据同步自 OPPO 欢律 App。覆盖：
+
+| 品牌 | 系列 |
+|------|------|
+| OPPO | Enco Free / Air / X / R / Clip / Buds 系列 |
+| OnePlus | Buds Pro / Nord Buds / Bullets Wireless 系列 |
+| realme | Buds Air / Buds T / Buds Wireless / DIZO 系列 |
+
+经真机测试的重点型号：
+
 | 型号 | 降噪 | 自适应 | 空间音效 | 空间音频 | 双设备 | 大师调音 |
 |:---|:---:|:---:|:---:|:---:|:---:|:---:|
 | Enco Free4 | ✅ | ✅ | ✅ | — | ✅ | ✅ |
 | Enco X3 | ✅ | — | — | ✅ | ✅ | ✅ |
-| Enco Air5 | ✅ | ✅ | ✅ | — | — | ✅ |
 | Enco Air5 Pro | ✅ | ✅ | ✅ | — | ✅ | ✅ |
-| Enco Air4 Pro | ✅ | ✅ | — | — | ✅ | ✅ (3 种预设，已实测) |
+| Enco Air4 Pro | ✅ | ✅ | — | — | ✅ | ✅ (已实测) |
 | Enco Air2 Pro | ✅ | — | — | — | — | ✅ |
 
-其他名称包含 "OPPO" 的蓝牙设备可自动连接，使用通用功能集。若自动识别失败，可在设置中手动指定设备型号。
+若自动识别失败，可使用设置中的**可搜索设备选择器**手动覆盖。
 
 ### 项目结构
 
